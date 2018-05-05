@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="gbc">
+    <div id="gbc" class="container">
         <img class="center" src="gbc.png" width="540" height="902">
     </div>
 </body>
