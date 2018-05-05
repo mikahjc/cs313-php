@@ -10,7 +10,7 @@ img.center {
 
 .container {
     position: relative;
-    display: inline-block;
+    width: 540px;
 }
 
 .menuItems {
