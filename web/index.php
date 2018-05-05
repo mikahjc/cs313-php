@@ -5,6 +5,8 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<img class="center" src="gbc.png" width="540" height="902">
+    <div id="gbc">
+        <img class="center" src="gbc.png" width="540" height="902">
+    </div>
 </body>
 </html>
