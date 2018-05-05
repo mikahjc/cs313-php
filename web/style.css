@@ -11,3 +11,9 @@ img.center {
 .container {
     position: relative;
 }
+
+.menuItems {
+    position: absolute;
+    top: 98px;
+    left: 126px;
+}
