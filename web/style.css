@@ -60,10 +60,11 @@ a.menuEntry {
 }
 
 footer {
-    background-color: midnightblue;
+    background-color: darkslategray;
     color: lightgray;
     font-family: 'Muli', sans-serif
     font-size: x-small;
     padding: 15px;
     margin: 15px;
+    width: 100%;
 }
