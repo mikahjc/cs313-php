@@ -29,7 +29,8 @@ img.center {
     top: 98px;
     left: 142px;
     height: 136px;
-    overflow: scroll;
+    width: 270px;
+    overflow: auto;
 }
 
 .dialog {
