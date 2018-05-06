@@ -13,7 +13,8 @@
             <p><a class="menuEntry" href="">WEEK 4</a></p>
             <p><a class="menuEntry" href="">WEEK 5</a></p>
         </div>
-        <div class="dialog">Choose a page.</div>
+        <div class="dialogLine1">OAK: VIEWER!</div>
+        <div class="dialogLine2">This isn't the</div>
     </div>
 </body>
 </html>
