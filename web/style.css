@@ -67,3 +67,7 @@ footer {
     padding: 15px;
     margin: 15px;
 }
+
+footer a {
+    color: lightgray;
+}
