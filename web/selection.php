@@ -15,7 +15,7 @@
                     $currentWeek = "week".$i;
                     echo "<p><a class='menuEntry' id='".$currentWeek."' ";
                     if (file_exists("./".$currentWeek)) {
-                        echo "href='./".$currentWeek".'/index.php'>";
+                        echo "href='./".$currentWeek.".'/index.php'>";
                     } else {
                         echo "href='#' onClick='oak()'>";
                     }
