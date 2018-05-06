@@ -3,7 +3,7 @@
 <head>
     <title>Mikah's CS 313 Selection</title>
     <link rel="stylesheet" href="style.css">
-    <script src="jquery-3.3.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="selector.js"></script>
 </head>
 <body>
