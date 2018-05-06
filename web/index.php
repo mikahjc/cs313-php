@@ -24,5 +24,6 @@
     <map name="screenMap">
         <area shape="rect" coords="123,105,367,137" href="selection.php" alt="Continue">
     </map>
+    <?php include "footer.php";?>
 </body>
 </html>

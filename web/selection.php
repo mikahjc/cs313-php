@@ -27,6 +27,6 @@
         <div id="dialogLine1">Choose a page.</div>
         <div id="dialogLine2"></div>
     </div>
-
+    <?php include "footer.php"; ?>
 </body>
 </html>
