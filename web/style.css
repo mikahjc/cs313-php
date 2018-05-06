@@ -30,7 +30,7 @@ img.center {
     left: 142px;
     height: 136px;
     width: 270px;
-    overflow: auto;
+    overflow: hidden;
 }
 
 .dialog {
@@ -38,4 +38,9 @@ img.center {
     position: absolute;
     top: 307px;
     left: 126px;
+}
+
+a.menuEntry {
+    text-decoration: none;
+    color: black;
 }
