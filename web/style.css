@@ -65,6 +65,9 @@ footer {
     font-family: 'Muli', sans-serif
     font-size: x-small;
     padding: 15px;
-    margin: 15px;
+    margin-top: 15px;
+    margin-bottom: 0;
+    margin-left: 0;
+    margin-right: 0;
     width: 100%;
 }
