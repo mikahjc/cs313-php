@@ -7,6 +7,11 @@
 <body>
     <div id="gbc" class="container">
         <img class="center" src="gbc_main.png" width="540" height="902" usemap="#screenMap">
+        <div class="timeDisplay">
+            <?php
+                echo date("l")."<br>";
+            ?>
+        </div>
     </div>
     <map name="screenMap">
         <area shape="rect" coords="123,105,367,137" href="selection.php" alt="Continue">

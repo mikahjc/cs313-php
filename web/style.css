@@ -44,3 +44,10 @@ a.menuEntry {
     text-decoration: none;
     color: black;
 }
+
+.timeDisplay {
+    left: 126px;
+    top: 322px;
+    position: absolute;
+    font-family: "PokemonRBY";
+}
