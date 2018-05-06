@@ -9,7 +9,7 @@
         <img class="center" src="gbc_main.png" width="540" height="902" usemap="#screenMap">
         <div class="timeDisplay">
             <?php
-                echo strtoupper(date("l"))."<br>";
+                echo strtoupper(date("l"))."<br>   TIME";
             ?>
         </div>
     </div>
