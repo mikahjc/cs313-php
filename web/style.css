@@ -33,14 +33,14 @@ img.center {
     overflow: hidden;
 }
 
-.dialogLine1 {
+#dialogLine1 {
     font-family: "PokemonRBY";
     position: absolute;
     top: 307px;
     left: 126px;
 }
 
-.dialogLine2 {
+#dialogLine2 {
     font-family: "PokemonRBY";
     position: absolute;
     top: 340px;
