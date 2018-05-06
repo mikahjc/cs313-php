@@ -8,8 +8,12 @@
     <div id="gbc" class="container">
         <img class="center" src="gbc.png" width="540" height="902">
         <div class="menuItems">
-            <p>Week 1</p>
-            <p>Week 2</p>
+            <select>
+                <option>Week 1</option>
+                <option>Week 2</option>
+                <option>Week 3</option>
+                <option>Week 4</option>
+            </select>
         </div>
         <div class="dialog">Choose a week.</div>
     </div>
