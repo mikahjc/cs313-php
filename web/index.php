@@ -11,6 +11,7 @@
             <p>Week 1</p>
             <p>Week 2</p>
         </div>
+        <div class="dialog">Choose a week.</div>
     </div>
 </body>
 </html>

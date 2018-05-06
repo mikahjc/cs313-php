@@ -29,3 +29,10 @@ img.center {
     top: 98px;
     left: 142px;
 }
+
+.dialog {
+    font-family: "PokemonRBY";
+    position: absolute;
+    top: 307px;
+    left: 126px;
+}
