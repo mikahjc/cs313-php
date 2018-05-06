@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Mikah's CS 313 Homepage</title>
+    <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet"> 
     <link rel="stylesheet" href="style.css">
 </head>
 <body>

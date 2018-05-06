@@ -58,3 +58,11 @@ a.menuEntry {
     position: absolute;
     font-family: "PokemonRBY";
 }
+
+footer {
+    background-color: black;
+    color: lightgray;
+    font-family: 'Muli', sans-serif
+    font-size: small;
+    padding: 15px;
+}
