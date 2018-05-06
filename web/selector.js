@@ -1,8 +1,12 @@
+var shouldWait = 0
+
 function showText(target, message, index, interval) {   
   if (index < message.length) {
+    shouldWait = 1;
     $(target).append(message[index++]);
     setTimeout(function () { showText(target, message, index, interval); }, interval);
   }
+  shouldWait = 0;
 }
 
 function sleep(ms) {
@@ -23,6 +27,10 @@ async function oak() {
     
     // Show Oak warning
     showText("#dialogLine1", oakWarning1, 0, 40);
+    while (shouldWait != 0)
+    {
+        await sleep(50);
+    }
     showText("#dialogLine2", oakWarning2, 0, 40);
 
     await sleep(1000);
