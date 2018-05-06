@@ -1,3 +1,8 @@
+@font-face {
+    font-family: "PokemonRBY";
+    src: url('PKMNRBYGSC.ttf') format('truetype');
+}
+
 body {
     background-color: SlateGray;
 }
@@ -19,6 +24,7 @@ img.center {
 }
 
 .menuItems {
+    font-family: "PokemonRBY";
     position: absolute;
     top: 98px;
     left: 126px;
