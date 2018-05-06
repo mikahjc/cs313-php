@@ -1,12 +1,8 @@
-var shouldWait = 0
-
 function showText(target, message, index, interval) {   
-  if (index < message.length && shouldWait = 0) {
-    shouldWait = 1;
+  if (index < message.length) {
     $(target).append(message[index++]);
     setTimeout(function () { showText(target, message, index, interval); }, interval);
   }
-  shouldWait = 0;
 }
 
 function sleep(ms) {
