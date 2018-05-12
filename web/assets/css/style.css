@@ -1,6 +1,6 @@
 @font-face {
     font-family: "PokemonRBY";
-    src: url('Pokemon GB.ttf') format('truetype');
+    src: url('/assets/fonts/Pokemon GB.ttf') format('truetype');
 }
 
 body {
@@ -28,9 +28,10 @@ img.center {
     position: absolute;
     top: 98px;
     left: 142px;
-    height: 136px;
+    height: 160px;
     width: 270px;
     overflow: hidden;
+    line-height: 100%;
 }
 
 #dialogLine1 {
@@ -52,7 +53,7 @@ a.menuEntry {
     color: black;
 }
 
-.timeDisplay {
+#timeDisplay {
     left: 126px;
     top: 322px;
     position: absolute;

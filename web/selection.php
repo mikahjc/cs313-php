@@ -3,15 +3,15 @@
 <head>
     <title>Mikah's CS 313 Selection</title>
     <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet"> 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="assets/css/style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="selector.js"></script>
+    <script src="assets/script/selector.js"></script>
 </head>
 <body>
     <div id="gbc" class="container">
-        <img class="center" src="gbc_select.png" width="540" height="902">
+        <img class="center" src="assets/img/gbc_select.png" width="540" height="902">
         <div class="menuItems">
-            <p><a class="menuEntry" href="index.php">MAIN MENU</a></p>
+            <p><a class="menuEntry" href="/">MAIN MENU</a></p>
             <?php
                 for ($i = 3; $i <= 14; $i++) {
                     $currentWeek = "week".$i;
