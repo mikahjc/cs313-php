@@ -1,0 +1,116 @@
+@import url("/assets/css/style.css");
+
+header {
+    overflow: hidden;
+    background-color: DodgerBlue;
+    padding: 20px 10px;
+    border-radius: 6px;
+}
+
+header a.logo {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+header a {
+  float: left;
+  color: black;
+  text-align: center;
+  padding: 12px;
+  text-decoration: none;
+  font-size: 18px;
+  line-height: 25px;
+  border-radius: 4px;
+}
+
+.headerRight {
+    float: right;
+}
+
+h2 {
+	padding: 12px;
+}
+
+.center {
+	margin: auto;
+	width: 75%;
+	padding: 10px;
+}
+
+.item {
+	/*width: 25%;*/
+	display: flex;
+	flex: 1 0 20%;
+	flex-direction: column;
+	justify-content: space-between;
+	padding: 12px;
+	margin: 12px;
+	background-color: LightSlateGray;
+	text-align: left;
+	border-radius: 6px;
+}
+
+.checkoutRow {
+	/*width: 25%;*/
+	display: flex;
+	flex: 1 0 20%;
+	flex-direction: row;
+	justify-content: space-between;
+	padding: 12px;
+	margin: 12px;
+	background-color: LightSlateGray;
+	text-align: left;
+	border-radius: 6px;
+}
+
+.shop {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+img {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.title {
+	font-size: 18px;
+	font-weight: bold;
+	vertical-align: top;
+}
+
+.price {
+	padding-top: 5px;
+	padding-bottom: 5px;
+	float: left;
+}
+
+.checkoutInput {
+	float: right;
+	width: 50%;
+}
+
+.add {
+	float: right;
+	color: white;
+	border: none;
+	font-size: 16px;
+	background-color: MidnightBlue;
+	padding: 5px;
+	border-radius: 6px;
+}
+
+.remove {
+	float: left;
+	color: white;
+	border: none;
+	font-size: 16px;
+	background-color: DarkRed;
+	padding: 5px;
+	border-radius: 6px;
+}
+
+.subtotal {
+	float: right;
+}

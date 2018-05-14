@@ -1,9 +1,7 @@
-@font-face {
-    font-family: "PokemonRBY";
-    src: url('/assets/fonts/Pokemon GB.ttf') format('truetype');
-}
+@import url("/assets/css/fonts.css");
 
 body {
+    font-family: "Noto Sans";
     background-color: SlateGray;
 }
 
@@ -23,7 +21,7 @@ img.center {
     right: 0;
 }
 
-.menuItems {
+.gbMenuItems {
     font-family: "PokemonRBY";
     position: absolute;
     top: 98px;
@@ -39,6 +37,7 @@ img.center {
     position: absolute;
     top: 307px;
     left: 126px;
+    line-height: 100%;
 }
 
 #dialogLine2 {
@@ -46,9 +45,10 @@ img.center {
     position: absolute;
     top: 340px;
     left: 126px;
+    line-height: 100%;
 }
 
-a.menuEntry {
+a.gbMenuEntry {
     text-decoration: none;
     color: black;
 }
@@ -67,6 +67,9 @@ footer {
     font-size: 0.75em;
     padding: 15px;
     margin: 15px;
+    border-radius: 6px;
+    position: relative;
+    bottom: 0;
 }
 
 footer a {

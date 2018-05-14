@@ -1,3 +1,5 @@
+<?php $GBC_NOTICE = True;?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,14 +12,14 @@
 <body>
     <div id="gbc" class="container">
         <img class="center" src="assets/img/gbc_select.png" width="540" height="902">
-        <div class="menuItems">
-            <p><a class="menuEntry" href="/">MAIN MENU</a></p>
+        <div class="gbMenuItems">
+            <p><a class="gbMenuEntry" href="/">MAIN MENU</a></p>
             <?php
                 for ($i = 3; $i <= 14; $i++) {
                     $currentWeek = "week".$i;
-                    echo "<p><a class='menuEntry' id='".$currentWeek."' ";
-                    if (file_exists("./".$currentWeek)) {
-                        echo "href='./".$currentWeek.".'/index.php'>";
+                    echo "<p><a class='gbMenuEntry' id='".$currentWeek."' ";
+                    if (file_exists("./".$currentWeek."/index.php")) {
+                        echo "href='./".$currentWeek."''>";
                     } else {
                         echo "href='#' onClick='oak()'>";
                     }
