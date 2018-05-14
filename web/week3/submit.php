@@ -33,7 +33,7 @@
 					foreach($_SESSION['cart'] as $item => $quantity ) {
 						echo "<div class='item'>";
 						echo "<span class='title'>".$itemNames[$item]."</span>";
-						echo "<img src='".$spritepath.$itemSprites[$item]."'>";
+						echo "<img src='".$spritepath.$itemSprites[$item].".png'>";
 						echo "<div><div></div><div class='add'>".$quantity." @ $";
 						printf("%.2f",$itemPrices[$item]);
 						echo "</div></div>";
