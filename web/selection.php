@@ -37,7 +37,7 @@
         <area shape="rect" coords="89,614,143,657" id="down_button" href="#down" alt="DOWN">
         <area shape="rect" coords="49,561,90,616" href="#left" alt="LEFT">
         <area shape="rect" coords="142,561,183,616" href="#right" alt="RIGHT">
-        <area shape="circle" coords="361,605,34" href="#b" alt="B">
+        <area shape="circle" coords="361,605,34" href="/" alt="B">
         <area shape="circle" coords="456,575,34" id="a_button" href="javascript:clickSelectedLink();" alt="A">
         <area shape="rect" coords="207,729,257,751" href="#select" alt="SELECT">
         <area shape="rect" coords="283,729,333,751" href="#start" alt="START">
