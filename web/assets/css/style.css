@@ -32,6 +32,12 @@ img.center {
     line-height: 100%;
 }
 
+#selector {
+    position: absolute;
+    top: 110px;
+    left: 124px;
+}
+
 #dialogLine1 {
     font-family: "PokemonRBY";
     position: absolute;
@@ -75,3 +81,8 @@ footer {
 footer a {
     color: lightgray;
 }
+
+.bold {
+  font-weight: bolder;
+}
+
