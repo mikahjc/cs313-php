@@ -14,7 +14,7 @@
         <img class="center" src="assets/img/gbc_main.png" width="540" height="902" usemap="#screenMap">
         <div class="gbMenuItems" id="menuContainer">
             <p onmouseover="menuMouseOver(0)"><a id="menu1" class="gbMenuEntry" href="selection.php">ASSIGNMENTS</a></p>
-            <p onmouseover="menuMouseOver(1)"><a id="menu2" class="gbMenuEntry" href="#">TEAM BUILDER</a></p>
+            <p onmouseover="menuMouseOver(1)"><a id="menu2" class="gbMenuEntry" href="/teambuilder">TEAM BUILDER</a></p>
             <p onmouseover="menuMouseOver(2)"><a id="menu3" class="gbMenuEntry" href="#">OPTION</a></p>
         </div>
         <img id="selector" src="/assets/img/select.png">
