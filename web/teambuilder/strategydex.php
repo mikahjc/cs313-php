@@ -72,7 +72,7 @@ $number = $pokemonData["number"];
     if ($evolution == "") {
         $evolution = "Nothing";
     }
-echo "<h2>$name</h2>
+echo "<h2><a href='https://www.smogon.com/dex/sm/pokemon/$name'>$name</a></h2>
 <table>
     <tr>
         <th></th>
