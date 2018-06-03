@@ -1,5 +1,5 @@
 <?php
-if (!isset($_POST["pokemon"]) || $_POST["pokemon"] == "") {
+if (!isset($_POST["id"])) {
     header("Location: /teambuilder/billspc.php");
     die();
 }
@@ -7,7 +7,7 @@ if (!isset($_POST["pokemon"]) || $_POST["pokemon"] == "") {
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Add New Pokemon</title>
+    <title>Edit Pokemon</title>
     <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet"> 
     <link rel="stylesheet" href="/assets/css/style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -25,15 +25,22 @@ if (!isset($_POST["pokemon"]) || $_POST["pokemon"] == "") {
     require "dbConnect.php";
 
     $db = get_db();
-    
-    // Get types
-    $stmt = $db->prepare('SELECT name FROM pokemon WHERE id=:pokemonId;');
-    $stmt->bindValue("pokemonId", $_POST["pokemon"], PDO::PARAM_INT);
+
+    $longStatement = "SELECT id, pokemon, nickname, level, ability, nature, held_item, move_1, move_2, move_3, move_4, hp_iv, atk_iv, def_iv, spa_iv, spd_iv, spe_iv, hp_ev, atk_ev, def_ev, spa_ev, spd_ev, spe_ev FROM team_members WHERE owner=:tid AND id=:pid;";
+    $stmt = $db->prepare($longStatement);
+    $stmt->bindValue("tid", $_SESSION["userId"], PDO::PARAM_INT);
+    $stmt->bindValue("pid", $_POST["id"], PDO::PARAM_INT);
     $stmt->execute();
-    $name = $stmt->fetch(PDO::FETCH_ASSOC);    
+    $teamMember = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    // Get name
+    $stmt = $db->prepare('SELECT name FROM pokemon WHERE id=:pokemonId;');
+    $stmt->bindValue("pokemonId", $teamMember["pokemon"], PDO::PARAM_INT);
+    $stmt->execute();
+    $name = $stmt->fetch(PDO::FETCH_ASSOC);
 
     $stmt = $db->prepare('SELECT ability, name, hidden FROM allowed_abilities join abilities on allowed_abilities.ability = abilities.id WHERE pokemon=:pokemonId;');
-    $stmt->bindValue("pokemonId", $_POST["pokemon"], PDO::PARAM_INT);
+    $stmt->bindValue("pokemonId", $teamMember["pokemon"], PDO::PARAM_INT);
     $stmt->execute();
     $abilityList = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -46,13 +53,13 @@ if (!isset($_POST["pokemon"]) || $_POST["pokemon"] == "") {
     $itemList = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     $stmt = $db->prepare('SELECT move AS id, name, type, category, power, accuracy, pp, description, how_learned, learned_at FROM allowed_moves JOIN moves ON allowed_moves.move = moves.id WHERE pokemon=:pokemonId;');
-    $stmt->bindValue("pokemonId", $_POST["pokemon"], PDO::PARAM_INT);
+    $stmt->bindValue("pokemonId", $teamMember["pokemon"], PDO::PARAM_INT);
     $stmt->execute();
     $moveList = $stmt->fetchAll(PDO::FETCH_ASSOC);
     ?>
-    <h1>New Pokemon</h1>
+    <h1>Edit Pokemon</h1>
     <form action="billspc.php" method='POST'>
-        <input type="hidden" name="newPokemon" value=<?php echo "'".$_POST["pokemon"]."'"?>>
+        <input type="hidden" name="editPokemon" value=<?php echo "'".$_POST["id"]."'"?>>
         <table>
             <tr>
                 <th></th>
@@ -66,9 +73,9 @@ if (!isset($_POST["pokemon"]) || $_POST["pokemon"] == "") {
             </tr>
             <tr>
                 <td><img src=<?php echo "'/assets/img/sprites/pkmn/". strtolower($name["name"]) .".gif'";?>/></td>
-                <td><?=$name["name"]?><br><input type="text" name="nickname" placeholder="Nickname"></td>
+                <td><?=$name["name"]?><br><input type="text" name="nickname" placeholder="Nickname" value=<?php echo "'".$teamMember["nickname"]."'";?>></td>
                 <td>
-                    <input type="number" min="1" max="100" value="50" name="level">
+                    <input type="number" min="1" max="100" value=<?php echo "'".$teamMember["level"]."'";?> name="level">
                 </td>
                 <td>
                     <select name="ability">
@@ -77,10 +84,14 @@ if (!isset($_POST["pokemon"]) || $_POST["pokemon"] == "") {
                             $id = $ability["ability"];
                             $name = $ability["name"];
                             $hidden = $ability["hidden"];
+                            echo "<option ";
+                            if ($id == $teamMember["ability"]) {
+                                echo "selected ";
+                            }
                             if ($hidden) {
-                                echo "<option style='background-color: lightgray;' value='$id'>$name</option>";
+                                echo "style='background-color: lightgray;' value='$id'>$name</option>";
                             } else {
-                                echo "<option value='$id'>$name</option>";
+                                echo "value='$id'>$name</option>";
                             }
                         }?>
                     </select>
@@ -91,7 +102,11 @@ if (!isset($_POST["pokemon"]) || $_POST["pokemon"] == "") {
                         <?php foreach($natureList as $nature) {
                             $id = $nature["id"];
                             $name = $nature["name"];
-                            echo "<option value='$id'>$name</option>";
+                            echo "<option ";
+                            if ($id == $teamMember["nature"]) {
+                                echo "selected ";
+                            }
+                            echo "value='$id'>$name</option>";
                         }
                         ?>
                     </select>
@@ -102,7 +117,11 @@ if (!isset($_POST["pokemon"]) || $_POST["pokemon"] == "") {
                         <?php foreach($itemList as $item) {
                             $id = $item["id"];
                             $name = $item["name"];
-                            echo "<option value='$id'>$name</option>";
+                            echo "<option ";
+                            if ($id == $teamMember["held_item"]) {
+                                echo "selected ";
+                            }
+                            echo "value='$id'>$name</option>";
                         }  
                         ?>
                     </select>
@@ -113,7 +132,11 @@ if (!isset($_POST["pokemon"]) || $_POST["pokemon"] == "") {
                         <?php foreach($moveList as $move) {
                             $id = $move["id"];
                             $name = $move["name"];
-                            echo "<option value='$id'>$name</option>";
+                            echo "<option ";
+                            if ($id == $teamMember["move_1"]) {
+                                echo "selected ";
+                            }
+                            echo "value='$id'>$name</option>";
                         }
                         ?>
                     </select><br>
@@ -122,7 +145,11 @@ if (!isset($_POST["pokemon"]) || $_POST["pokemon"] == "") {
                         <?php foreach($moveList as $move) {
                             $id = $move["id"];
                             $name = $move["name"];
-                            echo "<option value='$id'>$name</option>";
+                            echo "<option ";
+                            if ($id == $teamMember["move_2"]) {
+                                echo "selected ";
+                            }
+                            echo "value='$id'>$name</option>";
                         }
                         ?>
                     </select><br>
@@ -131,7 +158,11 @@ if (!isset($_POST["pokemon"]) || $_POST["pokemon"] == "") {
                         <?php foreach($moveList as $move) {
                             $id = $move["id"];
                             $name = $move["name"];
-                            echo "<option value='$id'>$name</option>";
+                            echo "<option ";
+                            if ($id == $teamMember["move_3"]) {
+                                echo "selected ";
+                            }
+                            echo "value='$id'>$name</option>";
                         }
                         ?>
                     </select><br>
@@ -140,7 +171,11 @@ if (!isset($_POST["pokemon"]) || $_POST["pokemon"] == "") {
                         <?php foreach($moveList as $move) {
                             $id = $move["id"];
                             $name = $move["name"];
-                            echo "<option value='$id'>$name</option>";
+                            echo "<option ";
+                            if ($id == $teamMember["move_4"]) {
+                                echo "selected ";
+                            }
+                            echo "value='$id'>$name</option>";
                         }
                         ?>
                     </select>
@@ -149,23 +184,23 @@ if (!isset($_POST["pokemon"]) || $_POST["pokemon"] == "") {
                     <table>
                         <tr><th rowspan="2">IVs</th><th>HP</th><th>Atk</th><th>Def</th><th>SpA</th><th>SpD</th><th>Spe</th></tr>
                         <tr>
-                            <td><input style="width: 40px;" type="number" name="hp_iv" min="0" max="31" value="0"></td>
-                            <td><input style="width: 40px;" type="number" name="atk_iv" min="0" max="31" value="0"></td>
-                            <td><input style="width: 40px;" type="number" name="def_iv" min="0" max="31" value="0"></td>
-                            <td><input style="width: 40px;" type="number" name="spa_iv" min="0" max="31" value="0"></td>
-                            <td><input style="width: 40px;" type="number" name="spd_iv" min="0" max="31" value="0"></td>
-                            <td><input style="width: 40px;" type="number" name="spe_iv" min="0" max="31" value="0"></td>
+                            <td><input style="width: 40px;" type="number" name="hp_iv" min="0" max="31" value=<?php echo "'".$teamMember["hp_iv"]."'";?>></td>
+                            <td><input style="width: 40px;" type="number" name="atk_iv" min="0" max="31" value=<?php echo "'".$teamMember["atk_iv"]."'";?>></td>
+                            <td><input style="width: 40px;" type="number" name="def_iv" min="0" max="31" value=<?php echo "'".$teamMember["def_iv"]."'";?>></td>
+                            <td><input style="width: 40px;" type="number" name="spa_iv" min="0" max="31" value=<?php echo "'".$teamMember["spa_iv"]."'";?>></td>
+                            <td><input style="width: 40px;" type="number" name="spd_iv" min="0" max="31" value=<?php echo "'".$teamMember["spd_iv"]."'";?>></td>
+                            <td><input style="width: 40px;" type="number" name="spe_iv" min="0" max="31" value=<?php echo "'".$teamMember["spe_iv"]."'";?>></td>
                         </tr>
                     </table><br>
                     <table>
                         <tr><th rowspan="2">EVs</th><th>HP</th><th>Atk</th><th>Def</th><th>SpA</th><th>SpD</th><th>Spe</th></tr>
                         <tr>
-                            <td><input style="width: 40px;" type="number" name="hp_ev" min="0" max="510" value="0"></td>
-                            <td><input style="width: 40px;" type="number" name="atk_ev" min="0" max="510" value="0"></td>
-                            <td><input style="width: 40px;" type="number" name="def_ev" min="0" max="510" value="0"></td>
-                            <td><input style="width: 40px;" type="number" name="spa_ev" min="0" max="510" value="0"></td>
-                            <td><input style="width: 40px;" type="number" name="spd_ev" min="0" max="510" value="0"></td>
-                            <td><input style="width: 40px;" type="number" name="spe_ev" min="0" max="510" value="0"></td>
+                            <td><input style="width: 40px;" type="number" name="hp_ev" min="0" max="510" value=<?php echo "'".$teamMember["hp_ev"]."'";?>></td>
+                            <td><input style="width: 40px;" type="number" name="atk_ev" min="0" max="510" value=<?php echo "'".$teamMember["atk_ev"]."'";?>></td>
+                            <td><input style="width: 40px;" type="number" name="def_ev" min="0" max="510" value=<?php echo "'".$teamMember["def_ev"]."'";?>></td>
+                            <td><input style="width: 40px;" type="number" name="spa_ev" min="0" max="510" value=<?php echo "'".$teamMember["spa_ev"]."'";?>></td>
+                            <td><input style="width: 40px;" type="number" name="spd_ev" min="0" max="510" value=<?php echo "'".$teamMember["spd_ev"]."'";?>></td>
+                            <td><input style="width: 40px;" type="number" name="spe_ev" min="0" max="510" value=<?php echo "'".$teamMember["spe_ev"]."'";?>></td>
                         </tr>
                     </table>
                 </td>

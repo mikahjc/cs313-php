@@ -8,15 +8,10 @@
 </head>
 <body>
     <?php
-    try {
-        $username = "www-data";
-        $password = "webpasswd";
-        $db = new PDO('pgsql:host=localhost;dbname=teambuilder;', $username, $password);
-        $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    } catch (PDOException $ex) {
-        // Dump error somewhere
-        die();
-    }
+    include "navbar.php";
+    require "dbConnect.php";
+
+    $db = get_db();
     
     // Get types
     $stmt = $db->prepare('SELECT id, name, gen FROM pokemon ORDER BY id;');

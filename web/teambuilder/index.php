@@ -1,4 +1,13 @@
-<?php session_start(); ?>
+<?php
+    $error = NULL;
+    session_start();
+    if(!isset($_SESSION["loggedin"])) {
+        session_destroy();
+        header("location: /teambuilder/login.php");
+        die();
+    }
+    
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,13 +17,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
-    <div id="controls">
-        <a class='button' href="teams.php">Manage Teams</a>
-        <a class='button' href="billspc.php">Bill's PC</a>
-        <a class='button' href="strategydex.php">Mini StrategyDex</a>
-        <a class='button' href="movedex.php">Movedex</a>
-        <a class='button' href="#">Abilitydex</a>
-    </div>
-    <?php include "../footer.php"; ?>
+    <?php
+    include "navbar.php";
+    include "../footer.php";
+    ?>
 </body>
 </html>
