@@ -44,7 +44,7 @@
 	<form action="login.php" method="POST">
 		Email: <input type="text" name="email"><br>
 		Password: <input type="password" name="password"><br>
-		<input type="submit">
+		<button type="submit">Login</button>
 	</form>
 </body>
 </html>
