@@ -1,0 +1,14 @@
+#controls {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  width: 30%;
+  background-color: LightSlateGray;
+}
+
+#controls a {
+  text-align: center;
+  background-color: LightSteelBlue;
+  border-radius: 5px;
+  padding: 10px;
+}

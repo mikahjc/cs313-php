@@ -1,0 +1,95 @@
+#controls {
+  display: flex;
+  flex-direction: row;
+  margin: auto;
+  background-color: LightSlateGray;
+  align-items: center;
+  justify-content: center;
+}
+
+#controls a {
+  text-align: center;
+  background-color: LightSteelBlue;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.name {
+  font-weight: bold;
+}
+
+.centered {
+  margin: auto;
+  text-align: left;
+  display: inline-block;
+}
+body {
+  text-align: center;
+}
+
+option.gray {
+  background-color: lightgray;
+}
+
+button {
+  background-color: LightSteelBlue;
+  border-radius: 5px;
+  border: none;
+  padding: 10px;
+  font-size: 1em;
+}
+
+a.button {
+  background-color: LightSteelBlue;
+  border-radius: 5px;
+  border: none;
+  padding: 10px;
+}
+
+table#pcbox {
+  margin: auto;
+  border-collapse: collapse;
+  border-radius: 5px;
+}
+
+table#team {
+  margin: auto;
+  border-collapse: collapse;
+}
+
+td {
+  text-align: center;
+  padding: 10px;
+  white-space: nowrap;
+}
+
+th {
+  padding: 5px;
+  background-color: MidnightBlue;
+  color: white;
+  line-height: 150%;
+  text-align: center;
+}
+
+td.pkmn {
+  border-top: 1px solid LightSteelBlue;
+  line-height: 150%;
+}
+
+table.values {
+  width: 95%; 
+  margin: auto;
+}
+
+table.values th, tr.rounded th {
+  border-radius: 6px;
+}
+
+table.values td, tr.rounded td {
+  background-color: LightGray;
+  border-radius: 5px;
+}
+
+input, button, option, select {
+  font-family: "Noto Sans", sans-serif;
+}

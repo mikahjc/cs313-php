@@ -4,11 +4,12 @@
     <title>Teams</title>
     <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet"> 
     <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/teambuilder.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="/assets/script/teams.js"></script>
 </head>
 <body>
 	<?php
-	include "navbar.php";
 	session_start();
 	if(!isset($_SESSION["loggedin"])) {
         session_destroy();
@@ -35,8 +36,16 @@
     	}
     }
 
+    if (isset($_POST["name"])) {
+      $stmt = $db->prepare('UPDATE teams SET team_name = :newName WHERE owner=:tid AND id=:id;');
+      $stmt->bindValue("newName", filter_var($_POST["name"], FILTER_SANITIZE_STRING), PDO::PARAM_STR);
+      $stmt->bindValue("tid", $userId, PDO::PARAM_INT);
+      $stmt->bindValue("id", $_SESSION["currentTeam"], PDO::PARAM_INT);
+      $stmt->execute();
+    }
+
     // Get types
-    $stmt = $db->prepare('SELECT id, team_name FROM teams WHERE owner=:tid;');
+    $stmt = $db->prepare('SELECT id, team_name FROM teams WHERE owner=:tid ORDER BY team_name;');
     $stmt->bindValue("tid", $_SESSION["userId"], PDO::PARAM_INT);
     $stmt->execute();
     $teamList = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -82,9 +91,11 @@
         }
     }
     ?>
+    <div class='centered'>
+	<?php include "navbar.php";?>
     <h1>Teams</h1>
     <h2>Select Team:</h2>
-    <form action="teams.php" method='POST'>
+    <form name="teamSelect" action="teams.php" method='POST'>
     Team: <select name="team">
         <option></option>
         <?php foreach($teamList as $row) {
@@ -97,6 +108,7 @@
         }?>
     </select>
     <button type='submit'>Load team</button>
+    <button type='button' onclick='deleteTeam()'>Delete team</button>
 	</form><br>
 	<form action="teams.php" method="POST">
 		Name: <input type='text' name='newTeam'>
@@ -104,8 +116,9 @@
 	</form>
 <?php
 if (isset($teamData)) { 
-	echo "<h1>".$teamData["team_name"]."</h1>
-	<table>";
+	echo "<br><form action='teams.php' method='POST'><table><tr><td><input name='name' style='font-size: 2em; background-color: LightSteelBlue; border: none; border-radius: 5px;' value='".$teamData["team_name"]."'></td>
+        <td><button type='submit'>Rename</button></td></tr></table></form>
+	<table id='team'>";
 	$imageRow = "<tr>";
 	$nameRow = "<tr>";
 	$dataRow = "<tr>";
@@ -137,36 +150,40 @@ if (isset($teamData)) {
 			$spe_ev = $member["spe_ev"];
 
 			// Image and name
-			$imageRow .= "<td><img src='/assets/img/sprites/pkmn/". strtolower($name) .".gif'/></td>";
-			$nameRow .= "<td><h3>$name";
-			if (!is_null($level)) $nameRow .= " ($level)</h3>";
-			else $nameRow .= "</h3>";
-			if (!is_null($nickname)) $nameRow .= "<h4>\"$nickname\"</h4>";
-			$nameRow .= "</td>";
-			$dataRow .= "<td>Ability: $ability<br>Nature: $nature<br>";
-			if (!is_null($held_item)) $dataRow .= "Item: $held_item<br>";
-			$dataRow .= "Moves:<br>";
-			foreach ($moves as $move) $dataRow .= "\t$move<br>";
-			$dataRow .= "IVs:<table><tr><th>HP</th><th>Atk</th><th>Def</th><th>SpA</th><th>SpD</th><th>Spe</th></tr>
-			                 <tr><td>$hp_iv</td><td>$atk_iv</td><td>$def_iv</td><td>$spa_iv</td><td>$spd_iv</td><td>$spe_iv</td></tr></table><br>";
-			$dataRow .= "EVs:<table><tr><th>HP</th><th>Atk</th><th>Def</th><th>SpA</th><th>SpD</th><th>Spe</th></tr>
-			                 <tr><td>$hp_ev</td><td>$atk_ev</td><td>$def_ev</td><td>$spa_ev</td><td>$spd_ev</td><td>$spe_ev</td></tr></table><br>";
-			$dataRow .= "<form action='remove.php' method='POST'>
+			echo "<tr><td class='pkmn'><img src='/assets/img/sprites/pkmn/". strtolower($name) .".gif'/></td>";
+			echo "<td class='pkmn'><h3>$name";
+			if (!is_null($level)) echo " ($level)</h3>";
+	    else "</h3>";
+			if (!is_null($nickname)) echo "<h4>\"$nickname\"</h4>";
+			echo "</td>";
+			echo "<td class='pkmn'>Ability: $ability<br>Nature: $nature<br>";
+			if (!is_null($held_item)) echo "Item: $held_item</td>";
+			echo "<td class='pkmn'>Moves:<br>";
+			foreach ($moves as $move) echo "$move<br>";
+      echo "</td><td class='pkmn'>";
+			echo "IVs:<table class='values'><tr><th>HP</th><th>Atk</th><th>Def</th><th>SpA</th><th>SpD</th><th>Spe</th></tr>
+			                 <tr><td>$hp_iv</td><td>$atk_iv</td><td>$def_iv</td><td>$spa_iv</td><td>$spd_iv</td><td>$spe_iv</td></tr></table></td><td class='pkmn'>";
+			echo "EVs:<table class='values'><tr><th>HP</th><th>Atk</th><th>Def</th><th>SpA</th><th>SpD</th><th>Spe</th></tr>
+			                 <tr><td>$hp_ev</td><td>$atk_ev</td><td>$def_ev</td><td>$spa_ev</td><td>$spd_ev</td><td>$spe_ev</td></tr></table></td>";
+			echo "<td class='pkmn'>";
+      echo "<form action='newpokemon.php' method='POST'>
+        <input type='hidden' name='edit' value='true'>
+              <button value='$id' name='id' type='submit'>Modify</button></form>";
+      echo "<form action='remove.php' method='POST'>
 						 <input value='$i' name='slot' type='hidden'>
 						 <input value='$teamId' name='teamId' type='hidden'>
-						 <button type='submit'>Remove</button></form><br>";
-			$dataRow .= "</td>";
+						 <button type='submit'>Remove</button></form>";
+			echo "</td></tr>";
 		} else {
-			$imageRow .= "<td><form action='billspc.php' method='POST'>";
-			$imageRow .= "<input type='hidden' name='teamId' value='$teamId'><input type='hidden' name='slot' value='$i'>";
-			$imageRow .= "<button type='submit'>Add</button></form></td>";
-			$dataRow .= "<td></td>";
-			$nameRow .= "<td></td>";
+			echo "<td><form action='billspc.php' method='POST'>";
+			echo "<input type='hidden' name='teamId' value='$teamId'><input type='hidden' name='slot' value='$i'>";
+			echo "<button type='submit'>Add</button></form></td></tr>";
 		}
 	}
-	echo $imageRow.$nameRow.$dataRow."</table>";
+	echo "</table>";
 }
 ?>
+</div>
     <?php include "../footer.php"; ?>
 </body>
 </html>

@@ -4,10 +4,12 @@
     <title>Bill's PC</title>
     <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet"> 
     <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/teambuilder.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="/assets/script/billspc.js"></script>
 </head>
 <body>
+<div class='centered'>
     <?php
     include "navbar.php";
     session_start();
@@ -162,44 +164,68 @@
     }
 
     // Get pokemon and members
-    $stmt = $db->prepare('SELECT id, name, gen FROM pokemon ORDER BY id;');
+    $longStatement = "SELECT p.id, p.name, t1.name as type1, t2.name as type2, gen
+                      FROM pokemon p
+                      LEFT JOIN types t1 ON p.type1 = t1.id
+                      LEFT JOIN types t2 ON p.type2 = t2.id
+                      ORDER BY p.id;";
+    $stmt = $db->prepare($longStatement);
     $stmt->execute();
     $pokemonList = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    $longStatement = "SELECT id, pokemon, nickname, level, ability, nature, held_item, move_1, move_2, move_3, move_4, hp_iv, atk_iv, def_iv, spa_iv, spd_iv, spe_iv, hp_ev, atk_ev, def_ev, spa_ev, spd_ev, spe_ev FROM team_members_view WHERE trainer_name=(SELECT trainer_name FROM users WHERE id=:tid) ORDER BY id";
+    $longStatement = "SELECT tmv.id,pokemon,t1.name as type1,t2.name as type2,nickname,level,ability,nature,held_item,move_1,move_2,move_3,move_4,hp_iv,atk_iv,def_iv,spa_iv,spd_iv,spe_iv,hp_ev,atk_ev,def_ev,spa_ev,spd_ev,spe_ev
+                      FROM team_members_view tmv
+                      LEFT JOIN pokemon p ON tmv.pokemon = p.name
+                      LEFT JOIN types t1 ON p.type1 = t1.id
+                      LEFT JOIN types t2 ON p.type2 = t2.id
+                      WHERE trainer_name=(SELECT trainer_name FROM users WHERE id=:tid)
+                      ORDER BY id";
     $stmt = $db->prepare($longStatement);
     $stmt->bindValue("tid", $_SESSION["userId"], PDO::PARAM_INT);
     $stmt->execute();
     $teamMembers = $stmt->fetchAll(PDO::FETCH_ASSOC);
     ?>
-
     <h1>Bill's PC</h1>
-    <table>
+    <table id="pcbox">
         <tr>
             <th></th>
             <th>Name</th>
+            <th>Type</th>
             <th>Ability<br>Nature<br>Held Item</th>
             <th>Moves</th>
             <th>IVs</th>
             <th>EVs</th>
+            <th></th>
         </tr>
         <tr>
             <td></td>
-            <td colspan="5">
+            <td id="addrow" colspan="6">
                 <form action='newpokemon.php' method="POST">
                     <select name="pokemon">
                         <option></option>
-                        <?php foreach($pokemonList as $row) {
+                        <?php $currentGen = 0; 
+                            foreach($pokemonList as $row) {
                             $id = $row["id"];
                             $name = $row["name"];
                             $gen = $row["gen"];
+                            $type1 = $row["type1"];
+                            $type2 = $row["type2"];
+                            if($currentGen != $gen && $gen != -1) {
+                                echo "<option class='gray' val='gen'>Generation $gen</option>";
+                                $currentGen = $gen;
+                            }
+                            if(!is_null($type2)) {
+                                $typeString = $type1."/".$type2;
+                            } else {
+                                $typeString = $type1;
+                            }
                             if (strpos($name, '-Mega') !== false) {
                                 continue;
                             }
                             if ($gen > 0) {
-                                echo "<option value='$id'>Gen $gen: $name</option>\n";
+                                echo "<option value='$id'>$name ($typeString)</option>\n";
                             } else if ($gen == -1) {
-                                echo "<option value='$id'>Alolan: $name</option>\n";
+                                echo "<option value='$id'>$name ($typeString)</option>\n";
                             }
                         }?>
                     </select>
@@ -216,6 +242,8 @@
             $name = $member["pokemon"];
             $nickname = $member["nickname"];
             $level = $member["level"];
+            $type1 = $member["type1"];
+            $type2 = $member["type2"];
             $ability = $member["ability"];
             $nature = $member["nature"];
             $held_item = $member["held_item"];
@@ -235,41 +263,49 @@
             $spa_ev = $member["spa_ev"];
             $spd_ev = $member["spd_ev"];
             $spe_ev = $member["spe_ev"];
-            echo "<tr><td><img class='center' src='/assets/img/sprites/pkmn/". strtolower($name) .".gif'/></td>";
-            echo "<td>$name";
+            echo "<tr><td class='pkmn'><img class='center' src='/assets/img/sprites/pkmn/". strtolower($name) .".gif'/></td>";
+            echo "<td class='pkmn'><span class='name'>$name</span>";
             $displayName = $name;
             if (!is_null($nickname)) {
                 echo "<br>\"$nickname\"</td>";
                 $displayName = $nickname;
             } 
             else echo "</td>";
-            echo "<td style='line-height: 150%;'>$ability<br>$nature<br>$held_item</td>";
-            echo "<td>";
-            foreach ($moves as $move) echo "$move<br>";
+            echo "<td class='pkmn'>$type1";
+            if (!is_null($type2)) {
+                echo "<br>$type2";
+            }
+            echo "</td><td class='pkmn' style='line-height: 200%'>$ability<br>$nature<br>$held_item</td>";
+            echo "<td class='pkmn'>";
+            foreach ($moves as $move) {
+                if ($move != "") echo "$move<br>";
+            }
             echo "</td>";
-            echo "<td><table><tr><th>HP</th><th>Atk</th><th>Def</th><th>SpA</th><th>SpD</th><th>Spe</th></tr>
+            echo "<td class='pkmn'><table class='values'><tr><th>HP</th><th>Atk</th><th>Def</th><th>SpA</th><th>SpD</th><th>Spe</th></tr>
             <tr><td>$hp_iv</td><td>$atk_iv</td><td>$def_iv</td><td>$spa_iv</td><td>$spd_iv</td><td>$spe_iv</td></tr></table></td>";
-            echo "<td><table><tr><th>HP</th><th>Atk</th><th>Def</th><th>SpA</th><th>SpD</th><th>Spe</th></tr>
-            <tr><td>$hp_ev</td><td>$atk_ev</td><td>$def_ev</td><td>$spa_ev</td><td>$spd_ev</td><td>$spe_ev</td></tr></table></td><td>";
+            echo "<td class='pkmn'><table class='values'><tr><th>HP</th><th>Atk</th><th>Def</th><th>SpA</th><th>SpD</th><th>Spe</th></tr>
+            <tr><td>$hp_ev</td><td>$atk_ev</td><td>$def_ev</td><td>$spa_ev</td><td>$spd_ev</td><td>$spe_ev</td></tr></table></td><td class='pkmn'>";
             if ($addingToTeam) {
                 echo "<button type='submit' name='teamMemberId' value='$id'>Add</button><br>"; 
             }
             $releaseFunction = '"releasePokemon(\''.$displayName.'\','.$id.')"';
             $editFunction = '"editPokemon('.$id.')"';
             echo "<button onclick=$editFunction>Modify</button>
-                  <button onclick=$releaseFunction>Release</button><td>";
+                  <button onclick=$releaseFunction>Release</button></td>";
         }
         if ($addingToTeam) {
             echo "</form>";
         }
         ?>
     </table>
-    <form id="editForm" action="editpokemon.php" method='POST'>
+    <form id="editForm" action="newpokemon.php" method='POST'>
+        <input type="hidden" name="edit" value="true">
         <input id="editValue" type="hidden" name="id" value="">
     </form>
     <form id="releaseForm" action="releasepokemon.php" method="POST">
         <input id="releaseValue" type="hidden" name="id" value="">
     </form>
+    </div>
     <?php include "../footer.php"; ?>
 </body>
 </html>

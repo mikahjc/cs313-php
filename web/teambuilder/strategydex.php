@@ -4,9 +4,11 @@
     <title>StrategyDex</title>
     <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet"> 
     <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/teambuilder.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
+    <div class='centered'>
     <?php
     include "navbar.php";
     require "dbConnect.php";
@@ -68,7 +70,7 @@ $number = $pokemonData["number"];
         $evolution = "Nothing";
     }
 echo "<h2><a href='https://www.smogon.com/dex/sm/pokemon/$name'>$name</a></h2>
-<table>
+<table class='values'>
     <tr>
         <th></th>
         <th>Pokedex #</th>
@@ -99,6 +101,7 @@ echo "<h2><a href='https://www.smogon.com/dex/sm/pokemon/$name'>$name</a></h2>
 }
 ?>
 </table>
+</div>
     <?php include "../footer.php"; ?>
 </body>
 </html>

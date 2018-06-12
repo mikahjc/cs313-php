@@ -37,14 +37,30 @@
 	<title>Teambuilder Login</title>
 	<link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet"> 
     <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/teambuilder.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
+  <div class="centered">
 	<?php echo $error; ?>
 	<form action="login.php" method="POST">
-		Email: <input type="text" name="email"><br>
-		Password: <input type="password" name="password"><br>
-		<button type="submit">Login</button>
+    <table>
+      <tr>
+		    <td>Email:</td><td><input type="text" name="email"></td>
+      </tr>
+      <tr>
+		    <td>Password:</td><td><input type="password" name="password"></td>
+      </tr>
+      <tr>
+        <td>
+		      <button type="submit" style="width: 100%">Login</button>
+        </td>
+        <td>
+          <a class='button' href="register.php">Register</a>
+        </td>
+      </tr>
+    </table>
 	</form>
+  </div>
 </body>
 </html>
