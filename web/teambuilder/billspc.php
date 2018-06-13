@@ -102,7 +102,13 @@
         $stmt->bindValue("spa_ev", $spa_ev, PDO::PARAM_INT);
         $stmt->bindValue("spd_ev", $spd_ev, PDO::PARAM_INT);
         $stmt->bindValue("spe_ev", $spe_ev, PDO::PARAM_INT);
-        $stmt->execute();
+        try {
+          $stmt->execute();
+        } catch (PDOException $ex) {
+          if (strpos($ex, 'team_member data violation') !== false) {
+            echo "<script>alert('team_member data violation. Data not saved.')</script>";
+          }
+        }
     }
 
     if (isset($_POST["editPokemon"])) {
@@ -160,7 +166,13 @@
         $stmt->bindValue("spa_ev", $spa_ev, PDO::PARAM_INT);
         $stmt->bindValue("spd_ev", $spd_ev, PDO::PARAM_INT);
         $stmt->bindValue("spe_ev", $spe_ev, PDO::PARAM_INT);
-        $stmt->execute();
+        try {
+          $stmt->execute();
+        } catch (PDOException $ex) {
+          if (strpos($ex, 'team_member data violation') !== false) {
+            echo "<script>alert('Team member data violation. Data not saved.')</script>";
+          }
+        }
     }
 
     // Get pokemon and members
